@@ -308,17 +308,17 @@ func (a *App) calculateAQI(pm25 float64) AQIInfo {
 		soundFile = "2" // 對應 2.mp3
 	} else if pm25 <= 54.4 {
 		level = "對敏感族群不健康"
-		color = "orange"
+		color = "red"
 		message = "警告，目前空氣品質已達不健康等級，尤其是對於敏感群體，建議減少戶外活動。"
 		soundFile = "3" // 對應 3.mp3
 	} else if pm25 <= 150.4 {
 		level = "對所有族群不健康"
-		color = "red"
+		color = "purple"
 		message = "危險，空氣品質目前已達危害等級，對所有人群可能造成健康風險，請立即減少戶外活動並採取防護措施。"
 		soundFile = "4" // 對應 4.mp3
 	} else if pm25 <= 250.4 {
 		level = "非常不健康"
-		color = "purple"
+		color = "maroon"
 		message = "危險已然迫近。"
 		soundFile = "5" // 對應 5.mp3
 	} else {

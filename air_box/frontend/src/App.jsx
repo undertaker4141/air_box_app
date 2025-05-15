@@ -18,7 +18,7 @@ import {
 import 'chartjs-adapter-date-fns';
 
 import './App.css';
-import mascotImage from './assets/images/mascot.png';
+import mascotImage from './assets/images/images.jpg';
 
 import sound1 from './assets/voice/1.mp3';
 import sound2 from './assets/voice/2.mp3';
