@@ -1,59 +1,158 @@
-#app {
+#App {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
+    background-color: #333; /* 暗色背景 */
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    width: 90vw; /* 類似 CrystalDiskMark 的寬度 */
+    max-width: 1000px;
+    height: 80vh;
+    max-height: 600px;
+    background-color: #444; /* 容器背景 */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 35%; /* 左側看板娘區域 */
+    padding: 20px;
+    background-color: #3a3a3a; /* 側邊欄背景 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #555;
+}
+
+.mascot-image {
+    width: 150px; /* 調整大小 */
+    height: auto;
+    border-radius: 50%; /* 如果想要圓形 */
+    margin-bottom: 15px;
+    border: 3px solid #555;
+}
+
+.mascot-bubble {
+    background-color: #505050;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
     text-align: center;
+    min-height: 50px; /* 給氣泡一點最小高度 */
+    width: 90%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-#logo {
-    display: block;
-    width: 50%;
-    height: 50%;
-    margin: auto;
-    padding: 10% 0 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-origin: content-box;
+.controls {
+    width: 100%;
+    font-size: 0.9em;
 }
 
-.result {
-    height: 20px;
-    line-height: 20px;
-    margin: 1.5rem auto;
+.controls select, .controls button {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #666;
+    background-color: #555;
+    color: #fff;
 }
 
-.input-box .btn {
-    width: 60px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 3px;
-    border: none;
-    margin: 0 0 0 20px;
-    padding: 0 8px;
-    cursor: pointer;
+.controls button:hover {
+    background-color: #666;
+}
+.controls button:disabled {
+    background-color: #4a4a4a;
+    cursor: not-allowed;
 }
 
-.input-box .btn:hover {
-    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-    color: #333333;
+
+.controls p {
+    font-size: 0.8em;
+    color: #ccc;
 }
 
-.input-box .input {
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
-    background-color: rgba(240, 240, 240, 1);
-    -webkit-font-smoothing: antialiased;
+.sound-toggle {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
 }
 
-.input-box .input:hover {
-    border: none;
-    background-color: rgba(255, 255, 255, 1);
+.sound-toggle label {
+    margin-right: 10px;
 }
 
-.input-box .input:focus {
-    border: none;
-    background-color: rgba(255, 255, 255, 1);
+.main-content {
+    width: 65%; /* 右側數據顯示區域 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
+
+.current-pm25 {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #3a3a3a;
+    border-radius: 8px;
+}
+
+.current-pm25 h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #eee;
+}
+
+.pm25-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.aqi-level {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.chart-container {
+    flex-grow: 1; /* 佔據 .main-content 中的剩餘垂直空間 */
+    background-color: #3a3a3a;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* 讓 h3 和圖表 div 垂直排列 */
+    position: relative; /* 通常是好習慣 */
+    min-height: 0; /* 對於 flex 子項很重要，允許其收縮 */
+    overflow: hidden; /* 防止內容溢出並幫助調試 */
+}
+
+.chart-container h3 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 1.1em;
+    color: #eee;
+    margin-bottom: 10px; /* 標題和圖表之間的間距 */
+    flex-shrink: 0; /* 防止標題被壓縮 */
+}
+
+/* 確保圖表容器有定義的高度，否則 Chart.js 可能無法正確渲染 */
+/* 針對 react-chartjs-2 生成的、包裹 canvas 的 div */
+/* 這個 div 是 .chart-container 的直接子元素 */
+.chart-container > div {
+    flex-grow: 1;       /* 讓這個 div 填滿 .chart-container 中剩餘的垂直空間 */
+    position: relative; /* 內部的 canvas 會相對於此 div 定位 */
+    min-height: 0;      /* 同樣，允許此 flex 子項收縮 */
+    /* width: 100%; 通常是預設的，或者由 flex item 自動處理 */
+}
+
+/* 仿 CrystalDiskMark 的標題列（如果需要，但 Wails 預設有自己的視窗標題列） */
+/* 你可能需要在 wails.json 中設定 frameless: true 然後自己實現標題列 */
